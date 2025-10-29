@@ -132,33 +132,6 @@
             color: #7f8c8d;
         }
         
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        
-        .filter-btn {
-            padding: 8px 20px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-btn:hover {
-            background: #f1f1f1;
-        }
-        
-        .filter-btn.active {
-            background: #3498db;
-            color: white;
-            border-color: #3498db;
-        }
-        
         footer {
             text-align: center;
             margin-top: 50px;
@@ -176,21 +149,6 @@
                 font-size: 2rem;
             }
         }
-        
-        @media (max-width: 480px) {
-            .catalog {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            }
-            
-            .stats {
-                gap: 15px;
-            }
-            
-            .stat-box {
-                min-width: 120px;
-                padding: 10px 15px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -202,7 +160,7 @@
         
         <div class="stats">
             <div class="stat-box">
-                <div class="stat-value">150</div>
+                <div class="stat-value">157</div>
                 <div class="stat-label">Productos Activos</div>
             </div>
             <div class="stat-box">
@@ -215,21 +173,6 @@
             </div>
         </div>
         
-        <div class="filters">
-            <button class="filter-btn active">Todos</button>
-            <button class="filter-btn">10 Puntos</button>
-            <button class="filter-btn">20 Puntos</button>
-            <button class="filter-btn">35 Puntos</button>
-            <button class="filter-btn">50 Puntos</button>
-            <button class="filter-btn">75 Puntos</button>
-            <button class="filter-btn">100 Puntos</button>
-            <button class="filter-btn">150 Puntos</button>
-            <button class="filter-btn">200 Puntos</button>
-            <button class="filter-btn">220 Puntos</button>
-            <button class="filter-btn">250 Puntos</button>
-            <button class="filter-btn">350+ Puntos</button>
-        </div>
-        
         <div class="catalog">
             <!-- Los productos se cargarán aquí dinámicamente -->
         </div>
@@ -240,7 +183,7 @@
     </div>
 
     <script>
-        // Datos de productos (código y cantidad)
+        // Datos de productos (código y cantidad) - 157 CÓDIGOS CON TOTAL 1,593
         const products = [
             { code: "01001", quantity: 34 },
             { code: "01002", quantity: 4 },
@@ -248,12 +191,16 @@
             { code: "01008", quantity: 58 },
             { code: "01009", quantity: 3 },
             { code: "02000", quantity: 7 },
+            { code: "02001", quantity: 1 },
+            { code: "02002", quantity: 1 },
             { code: "02003", quantity: 34 },
             { code: "02005", quantity: 24 },
             { code: "02006", quantity: 5 },
             { code: "02007", quantity: 11 },
+            { code: "02008", quantity: 4 },
             { code: "02010", quantity: 76 },
             { code: "02011", quantity: 26 },
+            { code: "02012", quantity: 1 },
             { code: "02013", quantity: 7 },
             { code: "02014", quantity: 14 },
             { code: "02015", quantity: 166 },
@@ -263,6 +210,7 @@
             { code: "02024", quantity: 11 },
             { code: "02026", quantity: 4 },
             { code: "02027", quantity: 22 },
+            { code: "02028", quantity: 9 },
             { code: "02029", quantity: 1 },
             { code: "02030", quantity: 8 },
             { code: "02031", quantity: 7 },
@@ -422,16 +370,6 @@
         // Inicializar la página
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
-            
-            // Agregar funcionalidad a los filtros
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    // Aquí se podría implementar la lógica de filtrado por categoría
-                });
-            });
         });
     </script>
 </body>
