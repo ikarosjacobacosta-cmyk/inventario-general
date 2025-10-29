@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario General de Productos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .product-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .product-code {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .product-quantity {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 10px 0;
+        }
+        
+        .product-label {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background: #f1f1f1;
+        }
+        
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .catalog {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .catalog {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .stat-box {
+                min-width: 120px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Inventario General de Productos</h1>
+            <p class="subtitle">Catálogo completo de productos con cantidades disponibles</p>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-value">150</div>
+                <div class="stat-label">Productos Activos</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">1,593</div>
+                <div class="stat-label">Total de Artículos</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">11</div>
+                <div class="stat-label">Categorías</div>
+            </div>
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active">Todos</button>
+            <button class="filter-btn">10 Puntos</button>
+            <button class="filter-btn">20 Puntos</button>
+            <button class="filter-btn">35 Puntos</button>
+            <button class="filter-btn">50 Puntos</button>
+            <button class="filter-btn">75 Puntos</button>
+            <button class="filter-btn">100 Puntos</button>
+            <button class="filter-btn">150 Puntos</button>
+            <button class="filter-btn">200 Puntos</button>
+            <button class="filter-btn">220 Puntos</button>
+            <button class="filter-btn">250 Puntos</button>
+            <button class="filter-btn">350+ Puntos</button>
+        </div>
+        
+        <div class="catalog">
+            <!-- Los productos se cargarán aquí dinámicamente -->
+        </div>
+        
+        <footer>
+            <p>Inventario actualizado al 2024 | Sistema de Gestión de Productos</p>
+        </footer>
+    </div>
+
+    <script>
+        // Datos de productos (código y cantidad)
+        const products = [
+            { code: "01001", quantity: 34 },
+            { code: "01002", quantity: 4 },
+            { code: "01003", quantity: 24 },
+            { code: "01008", quantity: 58 },
+            { code: "01009", quantity: 3 },
+            { code: "02000", quantity: 7 },
+            { code: "02003", quantity: 34 },
+            { code: "02005", quantity: 24 },
+            { code: "02006", quantity: 5 },
+            { code: "02007", quantity: 11 },
+            { code: "02010", quantity: 76 },
+            { code: "02011", quantity: 26 },
+            { code: "02013", quantity: 7 },
+            { code: "02014", quantity: 14 },
+            { code: "02015", quantity: 166 },
+            { code: "02016", quantity: 2 },
+            { code: "02018", quantity: 28 },
+            { code: "02023", quantity: 4 },
+            { code: "02024", quantity: 11 },
+            { code: "02026", quantity: 4 },
+            { code: "02027", quantity: 22 },
+            { code: "02029", quantity: 1 },
+            { code: "02030", quantity: 8 },
+            { code: "02031", quantity: 7 },
+            { code: "02032", quantity: 13 },
+            { code: "02033", quantity: 22 },
+            { code: "02035", quantity: 8 },
+            { code: "02036", quantity: 20 },
+            { code: "02037", quantity: 14 },
+            { code: "02038", quantity: 16 },
+            { code: "02039", quantity: 8 },
+            { code: "02040", quantity: 18 },
+            { code: "03502", quantity: 49 },
+            { code: "03503", quantity: 2 },
+            { code: "03504", quantity: 1 },
+            { code: "03505", quantity: 5 },
+            { code: "03506", quantity: 7 },
+            { code: "03508", quantity: 1 },
+            { code: "03509", quantity: 1 },
+            { code: "03510", quantity: 11 },
+            { code: "03511", quantity: 10 },
+            { code: "03512", quantity: 3 },
+            { code: "03513", quantity: 2 },
+            { code: "03514", quantity: 1 },
+            { code: "03515", quantity: 3 },
+            { code: "03516", quantity: 8 },
+            { code: "03517", quantity: 5 },
+            { code: "03518", quantity: 1 },
+            { code: "03520", quantity: 16 },
+            { code: "03521", quantity: 54 },
+            { code: "03523", quantity: 28 },
+            { code: "03524", quantity: 27 },
+            { code: "03525", quantity: 5 },
+            { code: "03526", quantity: 15 },
+            { code: "03527", quantity: 9 },
+            { code: "03528", quantity: 1 },
+            { code: "03529", quantity: 17 },
+            { code: "03530", quantity: 12 },
+            { code: "03531", quantity: 2 },
+            { code: "03532", quantity: 2 },
+            { code: "03533", quantity: 8 },
+            { code: "03534", quantity: 8 },
+            { code: "03535", quantity: 48 },
+            { code: "05000", quantity: 1 },
+            { code: "05002", quantity: 2 },
+            { code: "05004", quantity: 5 },
+            { code: "05005", quantity: 5 },
+            { code: "05006", quantity: 8 },
+            { code: "05009", quantity: 2 },
+            { code: "05010", quantity: 1 },
+            { code: "05011", quantity: 3 },
+            { code: "05012", quantity: 22 },
+            { code: "05013", quantity: 1 },
+            { code: "05014", quantity: 9 },
+            { code: "05015", quantity: 2 },
+            { code: "05016", quantity: 10 },
+            { code: "05017", quantity: 8 },
+            { code: "05018", quantity: 11 },
+            { code: "05019", quantity: 50 },
+            { code: "05020", quantity: 19 },
+            { code: "05021", quantity: 25 },
+            { code: "05023", quantity: 2 },
+            { code: "05024", quantity: 18 },
+            { code: "07501", quantity: 4 },
+            { code: "07502", quantity: 5 },
+            { code: "07503", quantity: 1 },
+            { code: "07506", quantity: 2 },
+            { code: "07507", quantity: 16 },
+            { code: "07508", quantity: 3 },
+            { code: "07511", quantity: 8 },
+            { code: "07512", quantity: 1 },
+            { code: "07514", quantity: 1 },
+            { code: "07516", quantity: 3 },
+            { code: "07517", quantity: 6 },
+            { code: "07518", quantity: 1 },
+            { code: "07519", quantity: 3 },
+            { code: "07521", quantity: 5 },
+            { code: "07522", quantity: 1 },
+            { code: "07523", quantity: 6 },
+            { code: "07524", quantity: 1 },
+            { code: "07525", quantity: 1 },
+            { code: "07526", quantity: 3 },
+            { code: "07527", quantity: 1 },
+            { code: "07528", quantity: 7 },
+            { code: "07529", quantity: 12 },
+            { code: "10000", quantity: 1 },
+            { code: "10001", quantity: 2 },
+            { code: "10002", quantity: 1 },
+            { code: "10003", quantity: 1 },
+            { code: "10004", quantity: 1 },
+            { code: "10005", quantity: 2 },
+            { code: "10006", quantity: 6 },
+            { code: "10007", quantity: 12 },
+            { code: "10008", quantity: 2 },
+            { code: "10009", quantity: 3 },
+            { code: "10011", quantity: 22 },
+            { code: "10012", quantity: 4 },
+            { code: "15000", quantity: 4 },
+            { code: "15001", quantity: 1 },
+            { code: "15003", quantity: 1 },
+            { code: "15004", quantity: 2 },
+            { code: "15005", quantity: 1 },
+            { code: "15007", quantity: 48 },
+            { code: "15008", quantity: 1 },
+            { code: "15009", quantity: 2 },
+            { code: "15012", quantity: 3 },
+            { code: "15013", quantity: 1 },
+            { code: "15015", quantity: 1 },
+            { code: "15017", quantity: 18 },
+            { code: "15018", quantity: 1 },
+            { code: "20000", quantity: 1 },
+            { code: "20003", quantity: 1 },
+            { code: "20005", quantity: 9 },
+            { code: "20006", quantity: 7 },
+            { code: "20007", quantity: 4 },
+            { code: "20008", quantity: 1 },
+            { code: "20009", quantity: 14 },
+            { code: "20010", quantity: 2 },
+            { code: "20011", quantity: 6 },
+            { code: "20014", quantity: 3 },
+            { code: "20019", quantity: 5 },
+            { code: "20024", quantity: 1 },
+            { code: "22001", quantity: 13 },
+            { code: "22002", quantity: 1 },
+            { code: "25000", quantity: 1 },
+            { code: "25001", quantity: 1 },
+            { code: "25002", quantity: 1 },
+            { code: "25004", quantity: 1 },
+            { code: "35000", quantity: 1 },
+            { code: "42000", quantity: 1 },
+            { code: "42001", quantity: 5 }
+        ];
+
+        // Función para cargar productos en el catálogo
+        function loadProducts() {
+            const catalog = document.querySelector('.catalog');
+            catalog.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="imagenes/${product.code}.jpg" alt="Producto ${product.code}" onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22180%22 viewBox=%220 0 200 180%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22180%22/><text fill=%22%23999%22 font-family=%22Arial%22 font-size=%2218%22 text-anchor=%22middle%22 x=%22100%22 y=%2295%22>${product.code}</text></svg>'">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-code">${product.code}</div>
+                        <div class="product-quantity">${product.quantity}</div>
+                        <div class="product-label">Artículos</div>
+                    </div>
+                `;
+                
+                catalog.appendChild(productCard);
+            });
+        }
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            
+            // Agregar funcionalidad a los filtros
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    // Aquí se podría implementar la lógica de filtrado por categoría
+                });
+            });
+        });
+    </script>
+</body>
+</html>
