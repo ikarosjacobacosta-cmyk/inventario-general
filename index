@@ -132,6 +132,13 @@
             color: #7f8c8d;
         }
         
+        .image-status {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
         footer {
             text-align: center;
             margin-top: 50px;
@@ -172,8 +179,12 @@
                 <div class="stat-label">Categorías</div>
             </div>
         </div>
+
+        <div class="image-status" id="imageStatus">
+            Cargando imágenes...
+        </div>
         
-        <div class="catalog">
+        <div class="catalog" id="catalog">
             <!-- Los productos se cargarán aquí dinámicamente -->
         </div>
         
@@ -183,7 +194,7 @@
     </div>
 
     <script>
-        // Datos de productos (código y cantidad) - 157 CÓDIGOS CON TOTAL 1,593
+        // Datos de productos (código y cantidad)
         const products = [
             { code: "01001", quantity: 34 },
             { code: "01002", quantity: 4 },
@@ -345,16 +356,31 @@
 
         // Función para cargar productos en el catálogo
         function loadProducts() {
-            const catalog = document.querySelector('.catalog');
+            const catalog = document.getElementById('catalog');
+            const imageStatus = document.getElementById('imageStatus');
             catalog.innerHTML = '';
+            
+            let loadedImages = 0;
+            let totalImages = products.length;
             
             products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 
+                // Rutas de imágenes - intentar diferentes extensiones
+                const imagePaths = [
+                    `imagenes/${product.code}.jpg`,
+                    `imagenes/${product.code}.jpeg`, 
+                    `imagenes/${product.code}.png`,
+                    `imagenes/${product.code}.webp`
+                ];
+                
                 productCard.innerHTML = `
                     <div class="product-image">
-                        <img src="imagenes/${product.code}.jpg" alt="Producto ${product.code}" onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22180%22 viewBox=%220 0 200 180%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22180%22/><text fill=%22%23999%22 font-family=%22Arial%22 font-size=%2218%22 text-anchor=%22middle%22 x=%22100%22 y=%2295%22>${product.code}</text></svg>'">
+                        <img src="${imagePaths[0]}" 
+                             alt="Producto ${product.code}"
+                             onload="imageLoaded()"
+                             onerror="this.onerror=null; this.src='${imagePaths[1]}';">
                     </div>
                     <div class="product-info">
                         <div class="product-code">${product.code}</div>
@@ -365,6 +391,25 @@
                 
                 catalog.appendChild(productCard);
             });
+
+            // Función para rastrear imágenes cargadas
+            window.imageLoaded = function() {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    imageStatus.textContent = `Todas las imágenes cargadas correctamente (${loadedImages}/${totalImages})`;
+                    imageStatus.style.color = '#27ae60';
+                } else {
+                    imageStatus.textContent = `Cargando imágenes... (${loadedImages}/${totalImages})`;
+                }
+            };
+
+            // Si después de 3 segundos no se cargaron todas, mostrar mensaje
+            setTimeout(() => {
+                if (loadedImages < totalImages) {
+                    imageStatus.textContent = `Cargadas ${loadedImages} de ${totalImages} imágenes. Algunas imágenes pueden no estar disponibles.`;
+                    imageStatus.style.color = '#e74c3c';
+                }
+            }, 3000);
         }
 
         // Inicializar la página
