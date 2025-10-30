@@ -124,12 +124,12 @@
         </div>
         
         <div class="catalog" id="catalog">
-            <!-- Los productos se cargarán aquí -->
+            <!-- Los productos se cargarán aquí dinámicamente -->
         </div>
     </div>
 
     <script>
-        // Datos completos de productos
+        // Datos COMPLETOS de productos
         const products = [
             { code: "01001", quantity: 34 },
             { code: "01002", quantity: 4 },
@@ -289,16 +289,21 @@
             { code: "42001", quantity: 5 }
         ];
 
+        // Función para cargar los productos
         function loadProducts() {
             const catalog = document.getElementById('catalog');
             
+            // Limpiar el contenedor primero
+            catalog.innerHTML = '';
+            
+            // Crear una tarjeta para cada producto
             products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 
                 productCard.innerHTML = `
                     <div class="product-image">
-                        <img src="imagenes/${product.code}.jpg" alt="${product.code}">
+                        <img src="imagenes/${product.code}.jpg" alt="Producto ${product.code}">
                     </div>
                     <div class="product-code">${product.code}</div>
                     <div class="product-quantity">${product.quantity}</div>
@@ -308,6 +313,7 @@
             });
         }
 
+        // Cargar los productos cuando la página esté lista
         document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
